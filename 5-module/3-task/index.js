@@ -14,7 +14,6 @@ function initCarousel() {
     arrowRight.style.display = (endPoint + step === rightBorder) ? 'none' : '';
   };
 
-
   arrowLeft.style.display = 'none';
   arrowRight.addEventListener('click', () => { 
     scrollCarousel(-step);
