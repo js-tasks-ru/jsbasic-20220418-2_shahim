@@ -89,7 +89,7 @@ describe('7-module-2-task', () => {
       modal.close();
     });
 
-    it('должен вставлять содержимое модального окна в элемента с классом "modal__body"', () => {
+    it('должен вставлять содержимое модального окна в элемент с классом "modal__body"', () => {
       let innerTitleText = 'Внутренний заголовок содержимого';
       const node = createModalBody(innerTitleText);
 
@@ -100,7 +100,7 @@ describe('7-module-2-task', () => {
       expect(selectInnerTitle()).toBe(innerTitleText);
     });
 
-    it('должен вставлять содержимое модального окна в элемента с классом "modal__body" после его открытия', () => {
+    it('должен вставлять содержимое модального окна в элемент с классом "modal__body" после его открытия', () => {
       modal.open();
 
       let innerTitleText = 'Внутренний заголовок содержимого';
