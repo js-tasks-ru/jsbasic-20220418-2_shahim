@@ -6,6 +6,7 @@ import Modal from '../../7-module/2-task/index.js';
 export default class Cart {
   cartItems = []; // [product: {...}, count: N]
   modalWindow = '';
+  modalWindowElem = ''; 
   constructor(cartIcon) {
     this.cartIcon = cartIcon;
     this.addEventListeners();
@@ -122,25 +123,28 @@ export default class Cart {
     this.modalWindow = new Modal();
     this.modalWindow.setTitle("Your order");
     const basket = createElement('<div></div>');
-    const form = this.renderOrderForm();
-    basket.append(...this.cartItems.map(item => this.renderProduct(item.product, item.count)), form);
+    basket.append(
+      ...this.cartItems.map(item => this.renderProduct(item.product, item.count)), 
+      this.renderOrderForm()
+    );
     this.modalWindow.setBody(basket);
     this.modalWindow.open();
-    document.querySelector('.modal__body').addEventListener('click', this.clickOnForm);
-    document.querySelector('.cart-form').addEventListener('submit', this.onSubmit);
+    this.modalWindowElem = document.querySelector('.modal__body');
+    this.modalWindowElem.addEventListener('click', this.clickOnForm);
+    this.modalWindowElem.querySelector('.cart-form').addEventListener('submit', this.onSubmit);
   }
 
   onProductUpdate(cartItem) {
     this.cartIcon.update(this);
-    const modalWindow = document.querySelector('.modal__body');
-    if (modalWindow) {
-      const product = modalWindow.querySelector('[data-product-id="' + cartItem.product.id + '"]');
+    if (this.modalWindowElem !== '') {
+      const product = this.modalWindowElem.querySelector('[data-product-id="' + cartItem.product.id + '"]');
       product.querySelector('.cart-counter__count').innerHTML = cartItem.count;
       product.querySelector('.cart-product__price').innerHTML = '€' + (cartItem.product.price * cartItem.count).toFixed(2);
-      modalWindow.querySelector('.cart-buttons__info-price').innerHTML = '€' + this.getTotalPrice().toFixed(2);
+      this.modalWindowElem.querySelector('.cart-buttons__info-price').innerHTML = '€' + this.getTotalPrice().toFixed(2);
       if (cartItem.count == 0) {
         product.remove();
-        if (modalWindow.childNodes[0].children.length < 2) {
+        if (this.modalWindowElem.childNodes[0].children.length < 2) {
+          this.modalWindowElem = '';
           this.modalWindow.close();
         }
       }
@@ -149,11 +153,12 @@ export default class Cart {
 
   onSubmit = (event) => {
     event.preventDefault();
-    const submitButton = document.querySelector('.modal__body button[type=submit]');
+    const form = this.modalWindowElem.querySelector('.cart-form');
+    const submitButton = form.querySelector('button[type=submit]');
     submitButton.classList.add('is-loading');
     fetch('https://httpbin.org/post', {
       method: 'POST',
-      body: new FormData(document.querySelector('.cart-form'))
+      body: new FormData(form)
     })
     .then(responce => {
       this.modalWindow.setTitle("Success!");

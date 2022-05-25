@@ -8,7 +8,6 @@ export default class Carousel {
     this.render();
     this.addScroll();
     this.#elem.addEventListener('click', this.#elemClickEvent);
-    this.#elem.addEventListener('product-add', (event) => console.log(event));
   }
 
   #elemClickEvent = (e) => {

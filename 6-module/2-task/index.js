@@ -8,7 +8,6 @@ export default class ProductCard {
     this.#productInfo = product;
     this.render();
     this.#button = this.#elem.querySelector('.card__button');
-    this.#elem.addEventListener('product-add', (event) => console.log(event));
     this.#button.addEventListener('click', this.onButtonClick);
   }
 

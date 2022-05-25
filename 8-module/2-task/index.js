@@ -1,6 +1,11 @@
 import createElement from '../../assets/lib/create-element.js';
 import ProductCard from '../../6-module/2-task/index.js';
 
+const ALLOWED_FILTER_KEYS = { 
+  noNuts: 'noNuts', vegeterianOnly: 'vegeterianOnly',
+  category: 'category', maxSpiciness: 'maxSpiciness'
+}
+
 export default class ProductGrid {
   #elem = '';
   #prevFilters = {};
@@ -33,25 +38,25 @@ export default class ProductGrid {
       if (!properties[key]) {
         return result;
       }
-      if (key === 'noNuts') {
+      if (key === ALLOWED_FILTER_KEYS.noNuts) {
         if (product.nuts) {
           result = false;
           return result;
         }
       }
-      if (key === 'vegeterianOnly') {
+      if (key === ALLOWED_FILTER_KEYS.vegeterianOnly) {
         if (!product.vegeterian) {
           result = false;
           return result;
         }
       }
-      if (key === 'category') {
+      if (key === ALLOWED_FILTER_KEYS.category) {
         if (product.category !== properties[key]) {
           result = false;
           return result;
         }
       } 
-      if (key === 'maxSpiciness') {
+      if (key === ALLOWED_FILTER_KEYS.maxSpiciness) {
         if (product.spiciness > properties[key]) {
           result = false;
           return result;
