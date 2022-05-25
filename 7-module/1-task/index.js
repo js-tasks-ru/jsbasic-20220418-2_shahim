@@ -13,7 +13,6 @@ export default class RibbonMenu {
     this.#rightButton = this.#elem.querySelector('.ribbon__arrow_right');
     this.#elem.addEventListener('click', this.pressOnRibbon);
     this.#ribbonInner.addEventListener('scroll', this.scroll);
-    this.#elem.addEventListener('ribbon-select', (event) => console.log(event));
   }
 
   get elem() {

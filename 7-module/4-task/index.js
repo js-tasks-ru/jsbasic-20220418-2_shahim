@@ -91,11 +91,11 @@ export default class StepSlider {
     <!--Корневой элемент слайдера-->
     <div class="slider">
       <!--Ползунок слайдера с активным значением-->
-      <div class="slider__thumb">
+      <div class="slider__thumb" style="left: ${parseInt((this.#value / (this.#steps - 1)) * 100)}%;">
         <span class="slider__value">${this.#value}</span>
       </div>
       <!--Полоска слайдера-->
-      <div class="slider__progress" style="width: 0%;"></div>
+      <div class="slider__progress" style="width: ${parseInt((this.#value / (this.#steps - 1)) * 100)}%;"></div>
       <!-- Шаги слайдера (вертикальные чёрточки) -->
       <div class="slider__steps">
         <!-- текущий выбранный шаг выделен этим классом -->
